@@ -16,7 +16,7 @@ def get_dhl_status(tracking_number):
         otherwise None.
     """
 
-    api_url = f"https://api-eu.dhl.com/track/shipments?trackingNumber={tracking_number}"
+    api_url = f"https://api-test.dhl.com/track/shipments?trackingNumber={tracking_number}"
 
     headers = {'DHL-API-Key': os.environ.get("DHL_API_KEY")}
 
@@ -69,14 +69,14 @@ def main():
             # Extract required fields from the DHL API response
             try:
                 shipment = status_data["shipments"][0]
-                status_desc = shipment["status"]["description"]
-                shipper_cc = shipment["details"]["shipper"]["address"].get("countryCode", None)
-                consignee_cc = shipment["details"]['consignee']["address"].get("countryCode", None)
+                #status_desc = shipment["status"]["description"]
+                #shipper_cc = shipment["details"]["shipper"]["address"].get("countryCode", None)
+                #consignee_cc = shipment["details"]['consignee']["address"].get("countryCode", None)
                 results.append({
                     "tracking_id": tracking_id,
-                    "status_description": status_desc,
-                    "shipper_countryCode": shipper_cc,
-                    "consignee_countryCode": consignee_cc
+                    #"status_description": status_desc,
+                    #"shipper_countryCode": shipper_cc,
+                    #"consignee_countryCode": consignee_cc
                 })
             except (KeyError, IndexError, TypeError) as e:
                 print(f"Error extracting fields for {tracking_id}: {e}")
